@@ -28,14 +28,14 @@ Next Goal is to containerize the app: by writing a Dockerfile
 ## Behind The Scenes Steps: For ACR 🤯
 ```
 - [x]  Create Azure Container Registry:
-- [x]  Connect to acr:  az acr login -n flaskappacr
-- [x]  Tag DockerImage:   docker tag flask-monitor-app:v2 flaskappacr.azurecr.io/flask-app:v3
-- [x]  Push image to acr:   docker push flaskappacr.azurecr.io/flask-app:v3
+- [x]  Connect to acr:      ====> az acr login -n flaskappacr
+- [x]  Tag DockerImage:     ===> docker tag flask-monitor-app:v2 flaskappacr.azurecr.io/flask-app:v3
+- [x]  Push image to acr:   ====> docker push flaskappacr.azurecr.io/flask-app:v3
 - [x]  Edit image name in your deployment.yml
-- [x]  - [x] image: flaskappacr.azurecr.io/flask-app:v3
+- [x]   ----- [x] image: flaskappacr.azurecr.io/flask-app:v3
 - [x]  set roles to pull image from acr:
-	   - [x] az acr update -n flaskappacr --admin-enabled true
-	   - [x] az acr update -n flaskappacr --anonymous-pull-enabled
+- [x]   ----- [x] az acr update -n flaskappacr --admin-enabled true
+- [x]   ----- [x] az acr update -n flaskappacr --anonymous-pull-enabled
 ```
 
 ## Behind The Scenes Steps: For K8s 🤯
@@ -44,7 +44,7 @@ Next Goal is to containerize the app: by writing a Dockerfile
 1. Create k8s-cluster & generate a key
     1. ssh-keygen -t rsa -b 4096 -f aksclusterkey
 2. Connect to your k8s-cluster
-    1. az account set --subscription ********-****-****-********
+    1. az account set --subscription x*xxx*-x*xx*x-x**x**x*-x****
     2. az aks get-credentials --resource-group flask_app_rg --name flaskapp-aks-cluster
 3. Execute deployment-file:
     kubectl apply -f=deployment.yml
@@ -66,4 +66,5 @@ Once your pod is up and running, run the port-forward to expose the service
 
 kubectl port-forward service/<service_name> 5000:5000
 kubectl get pods -n default (to check the pods)
+
 
