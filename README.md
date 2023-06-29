@@ -2,14 +2,15 @@
 
 The aim of this project is to develop an application using python, deploy  it on my localhost, and later create a docker image from it, containerize it, and deploy it with kubernetes(AKS) using terraform..
 
+```
 ## Behind The Scenes Steps: For Python 🤯
-
+```
 After adding index.html to spice up the app. The app is running on my localhost
 Next Goal is to containerize the app: by writing a Dockerfile 
 1. Go to dockerhub.com
 2. Search for official python page & select a BaseImage to build on
-    WORKFLOW:
-        Dockerfile ---build--> Docker Image ---run---> Docker Container
+    1. WORKFLOW:
+        1. Dockerfile ---build--> Docker Image ---run---> Docker Container
 3. Write your Dockerfile code
 4. docker build -t my-flask-app .
 5. docker images == to see your images
@@ -22,10 +23,10 @@ Next Goal is to containerize the app: by writing a Dockerfile
 ========= Pulling my image from dockerhub and run it ===========
 1. docker pull tamiville/cloud-native-app:my-flask-app.v1
 2. docker run -d -t -p 5000:5000 --name flaskappmonitor tamiville/cloud-native-app:v1
+
 ```
-
 ## Behind The Scenes Steps: For ACR 🤯
-
+```
 
 Create Azure Container Registry:
     1. Connect to acr:	az acr login -n flaskappacr
@@ -36,10 +37,10 @@ Create Azure Container Registry:
     5. set roles to pull image from acr:
 	    az acr update -n flaskappacr --admin-enabled true
 	    az acr update -n flaskappacr --anonymous-pull-enabled
+
 ```
-
 ## Behind The Scenes Steps: For K8s 🤯
-
+```
 
 1. Create k8s-cluster & generate a key
     1. ssh-keygen -t rsa -b 4096 -f aksclusterkey
@@ -55,7 +56,7 @@ Create Azure Container Registry:
 - After applying deployment.yml && service.yml. deployment and service will be created.
 - Check by running following commands:
 
-```jsx
+```
 kubectl get deployment -n default (check deployments)
 kubectl get service -n default (check service)
 kubectl get pods -n default (to check the pods)
