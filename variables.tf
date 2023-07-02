@@ -1,14 +1,14 @@
 variable "rg_name" {
   type    = string
-  default = "flask_app_rg"
+  description = "Resource group name in Azure"
 }
 
 variable "location" {
   type    = string
-  default = "North Europe"
+  description = "Resource group location in Azure"
 }
 
 variable "acr" {
   type    = string
-  default = "flaskappacr"
+  description = "Azure Container Registry name"
 }

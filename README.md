@@ -50,7 +50,7 @@ Next Goal is to containerize the app: by writing a Dockerfile
     kubectl apply -f=deployment.yml
 4. Execute service-file:
     kubectl apply -f=service.yml
-    kubectl get svc
+- [x]    kubectl get svc
 ```
 - After applying deployment.yml && service.yml. deployment and service will be created.
 - Check by running following commands:
@@ -66,5 +66,6 @@ Once your pod is up and running, run the port-forward to expose the service
 
 kubectl port-forward service/<service_name> 5000:5000
 kubectl get pods -n default (to check the pods)
+
 
 

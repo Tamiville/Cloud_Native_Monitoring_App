@@ -39,14 +39,15 @@ data "azurerm_kubernetes_service_versions" "current" {
 
 resource "azurerm_kubernetes_cluster" "aks-cluster" {
   name                = "flaskapp-aks-cluster"
-  location            = azurerm_resource_group.flask_app_rg.location
-  resource_group_name = azurerm_resource_group.flask_app_rg.name
-  dns_prefix          = "k8stest"
+  location            = azurerm_resource_group.rg_name.location
+  resource_group_name = azurerm_resource_group.rg_name.name
+  dns_prefix          = "flaskapp-aks-cluster"
   kubernetes_version  = data.azurerm_kubernetes_service_versions.current.latest_version
 
   default_node_pool {
     name                = "defaultpool"
     vm_size             = "Standard_D2_V2"
+    node_count          = 3
     zones               = [1, 2]
     enable_auto_scaling = true
     max_count           = 3
@@ -65,10 +66,10 @@ resource "azurerm_kubernetes_cluster" "aks-cluster" {
     }
   }
 
-    service_principal {
-      client_id     = azuread_service_principal.flaskapp-sp.application_id
-      client_secret = azuread_service_principal_password.flaskapp-sp-pswd.value
-    }
+  service_principal {
+    client_id     = azuread_service_principal.flaskapp-sp.application_id
+    client_secret = azuread_service_principal_password.flaskapp-sp-pswd.value
+  }
 
 
   linux_profile {
@@ -80,7 +81,15 @@ resource "azurerm_kubernetes_cluster" "aks-cluster" {
   }
 
   network_profile {
-    network_plugin    = "azure"
+    network_plugin    = "kubenet"
     load_balancer_sku = "standard"
   }
 }
+
+# ##== Role Assignment to enable AKS-Cluster to download dockerimage from ACR ==##
+# resource "azurerm_role_assignment" "rolespn" {
+#   scope                            = azurerm_container_registry.acr.id
+#   role_definition_name             = "ArcPull"
+#   principal_id                     = azurerm_kubernetes_cluster.aks-cluster.id #kubelet_identity #.object_id
+#   skip_service_principal_aad_check = true
+# }
